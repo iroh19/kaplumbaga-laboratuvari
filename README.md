@@ -8,6 +8,10 @@ Braitenberg araçlarıyla tarayıcıda sibernetik deneyler. İki sensör, iki te
 
 ## Ne yapabilirsin?
 
+**Sayfa 1: Gerçek kaplumbağa (Grey Walter'ın robotu).** 1948-49'da yapılan Elmer ve Elsie'nin ne olduğunu, neden yapıldığını ve ne sonuç verdiğini, hiç bilgisi olmayanlar için anlatır. Etiketli bir kesit şeması, "beş kural" kartları, altı hazır deney (karanlık oda, tek lamba, engelin arkasındaki lamba, şarj kulübesi, ayna testi, iki kaplumbağa) ve robotun o an ne yaptığını düz Türkçeyle anlatan canlı bir panel içerir. Odaya kendi lamba ve engellerini koyabilirsin. Kaynaklar sayfanın sonunda. Bu model, kaynaklarda anlatılan davranışlara dayanan bir benzetimdir; hızlar ve eşikler bu projenin ayarlarıdır.
+
+**Sayfa 2: Braitenberg araçları.**
+
 - **Işık koy, araç koy, sil:** Sahneye tıklayarak deney kur.
 - **Dört araç tipi:** Korku, Saldırganlık, Sevgi, Kaşif (Braitenberg'in 2a, 2b, 3a, 3b araçları). Her kartta göz-tekerlek bağlantı şeması var.
 - **"Araç ne görüyor?" paneli:** Seçtiğin aracın iki gözünün gördüğü ışığı ve iki tekerleğinin hızını canlı gösterir, o an neden döndüğünü düz Türkçeyle açıklar.
@@ -34,7 +38,7 @@ Node.js 20.19 veya üstü gerekir.
 ```bash
 npm install       # bağımlılıkları kur
 npm run dev       # geliştirme sunucusu: http://localhost:5173
-npm test          # simülasyon çekirdeğinin testleri (25 test)
+npm test          # simülasyon çekirdeklerinin testleri (42 test)
 npm run build     # yayın için dist/ klasörünü üret
 ```
 
@@ -70,11 +74,16 @@ Uygulama, SPD'deki *big-bang* "world program" yapısında çalışır:
 ```
 src/
   sim/
+    tortoise.js      Walter'ın kaplumbağası: davranış kuralları, oda, hazır deneyler
+    tortoise.test.js Kaplumbağa testleri
+    tdraw.js         Kaplumbağa odasının canvas çizimi
     vehicles.js      Dört araç tipinin tanımı
     world.js         Veri tanımları ve saf simülasyon fonksiyonları
     world.test.js    Örnekler / testler
     draw.js          Canvas çizimi
+  TortoiseLab.jsx    Kaplumbağa sayfası (açıklamalar, deney odası, canlı panel)
   components/
+    TortoiseAnatomy.jsx  Etiketli kaplumbağa kesiti
     WorldCanvas.jsx  Canvas ve tıklama → dünya koordinatı
     WiringDiagram.jsx  Bağlantı şeması
     SignalPanel.jsx  Canlı sinyal çubukları ve düz Türkçe açıklama
@@ -110,5 +119,5 @@ Geliştirme sürecinde Claude (Anthropic) kullanıldı.
 ## Kaynaklar ve ilham
 
 - Valentino Braitenberg, *Vehicles: Experiments in Synthetic Psychology* (MIT Press, 1984)
-- W. Grey Walter'ın 1940'ların sonunda Bristol'da yaptığı robot "kaplumbağalar", Elmer ve Elsie
+- W. Grey Walter'ın 1940'ların sonunda Bristol'da yaptığı robot "kaplumbağalar", Elmer ve Elsie. Kaynaklar: [IEEE Spectrum](https://spectrum.ieee.org/meet-roombas-ancestor-cybernetic-tortoise), [Nautilus](https://nautil.us/the-tortoises-that-inspired-modern-robotics-1268922), [Science Museum Group](https://collection.sciencemuseumgroup.org.uk/objects/co531614/cybernetic-tortoise-developed-to-help-with-studies-on-brain-function), [Science Museum blog](https://blog.sciencemuseum.org.uk/tortoises-and-turing/)
 - Norbert Wiener, *Cybernetics* (1948)

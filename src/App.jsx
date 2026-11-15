@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import TortoiseLab from "./TortoiseLab.jsx";
 import WorldCanvas from "./components/WorldCanvas.jsx";
 import WiringDiagram from "./components/WiringDiagram.jsx";
 import SignalPanel from "./components/SignalPanel.jsx";
@@ -26,7 +27,7 @@ function baslangic() {
   return { scene: PRESETS[0].scene, preset: PRESETS[0].id, kaynak: "deney" };
 }
 
-export default function App() {
+function BraitenbergLab() {
   const ilk = useRef(null);
   if (ilk.current === null) ilk.current = baslangic();
 
@@ -410,4 +411,27 @@ function ozet(world, watchedRef) {
     watchedId: watchedRef.current,
     signal,
   };
+}
+
+/** Üst düzey sayfa: iki laboratuvar arasında sekmeyle geçiş. Paylaşılan Braitenberg bağlantısı (#s=...) doğrudan ikinci sekmeyi açar. */
+export default function App() {
+  const [sayfa, setSayfa] = useState(() => (sceneFromHash() ? "braitenberg" : "kaplumbaga"));
+  const sekmeler = [
+    { id: "kaplumbaga", ad: "1. Gerçek kaplumbağa: Walter'ın robotu" },
+    { id: "braitenberg", ad: "2. Braitenberg araçları" },
+  ];
+  return (
+    <>
+      <nav className="tabs" aria-label="Laboratuvar seçimi">
+        <div className="tabs-inner" role="tablist">
+          {sekmeler.map((k) => (
+            <button key={k.id} role="tab" aria-selected={sayfa === k.id} className={sayfa === k.id ? "active" : ""} onClick={() => setSayfa(k.id)}>
+              {k.ad}
+            </button>
+          ))}
+        </div>
+      </nav>
+      {sayfa === "kaplumbaga" ? <TortoiseLab /> : <BraitenbergLab />}
+    </>
+  );
 }

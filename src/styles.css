@@ -181,6 +181,7 @@ p {
 .an-glow { fill: var(--lamp); opacity: 0.22; }
 .an-lead { stroke: var(--ink-faint); stroke-width: 1; }
 .an-label { font-family: var(--body); font-size: 11.5px; fill: var(--ink-soft); }
+.an-label text[text-anchor="end"] { text-anchor: end; }
 
 .steps {
   margin: 0;
@@ -653,3 +654,238 @@ p {
   font-size: 12.5px;
   color: var(--ink-soft);
 }
+
+/* ---- Sekmeler ---- */
+
+.tabs {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: var(--gap) var(--gap) 0;
+}
+
+.tabs-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tabs button {
+  padding: 9px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--cell);
+  font-weight: 500;
+}
+
+.tabs button.active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+/* ---- Kaplumbağa sayfası ---- */
+
+.tbento {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gap);
+  grid-template-areas:
+    "title title title title title title title how how how how how"
+    "what what what what why why why why res res res res"
+    "stage stage stage stage stage stage stage stage signal signal signal signal"
+    "exp exp exp exp exp exp exp exp legend legend legend legend"
+    "rules rules rules rules rules rules rules rules rules rules rules rules"
+    "limits limits limits limits limits limits src src src src src src";
+}
+
+.tbento .cell-what { grid-area: what; }
+.tbento .cell-why { grid-area: why; }
+.tbento .cell-res { grid-area: res; }
+.tbento .cell-legend { grid-area: legend; }
+.tbento .cell-rules { grid-area: rules; }
+.tbento .cell-limits { grid-area: limits; }
+.tbento .cell-src { grid-area: src; }
+
+@media (max-width: 1080px) {
+  .tbento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "title title" "how how" "what why" "res res" "stage stage" "signal signal"
+      "exp exp" "legend legend" "rules rules" "limits src";
+  }
+}
+
+@media (max-width: 680px) {
+  .tbento {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "title" "how" "what" "why" "res" "stage" "signal" "exp" "legend" "rules" "limits" "src";
+  }
+}
+
+.tbento .cell-title h1 { font-size: clamp(30px, 4vw, 50px); }
+.tbento .cell h2 + p,
+.tbento .cell h2 + ul { margin-top: 10px; }
+.tbento .cell-what p,
+.tbento .cell-why p,
+.tbento .cell-limits p { color: var(--ink-soft); font-size: 14.5px; }
+
+.plain {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+
+.plain li + li { margin-top: 7px; }
+.plain a { color: var(--ink); text-underline-offset: 3px; }
+
+.tanatomy {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  margin: 8px auto 0;
+}
+
+.an-shell { fill: rgba(106, 169, 242, 0.22); stroke: var(--ink); stroke-width: 1.5; }
+.an-gap { stroke: var(--lamp-deep); stroke-width: 2; stroke-dasharray: 3 3; }
+.an-tube { fill: #fff; stroke: var(--ink); stroke-width: 1.5; }
+.an-batt { fill: #cdd9dd; stroke: var(--ink); stroke-width: 1.5; }
+.an-pilot { fill: #3cc873; stroke: var(--ink); stroke-width: 1; }
+.an-beam { fill: none; stroke: var(--lamp-deep); stroke-width: 1.2; stroke-dasharray: 3 3; }
+
+/* Canlı durum paneli */
+.state-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 5px 12px;
+  border: 1.5px solid var(--c);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.state-chip i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+.cell-signal .explain { min-height: 7.2em; }
+
+.meter-title { margin: 14px 0 6px; font-size: 13px; color: var(--room-soft); }
+
+.meter-zones {
+  position: relative;
+  display: flex;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.meter-zones span { display: block; height: 100%; }
+.z-dark { background: rgba(0, 0, 0, 0.35); }
+.z-mid { background: #3f8f5d; }
+.z-hot { background: #c98b12; }
+
+.meter-mark {
+  position: absolute;
+  top: -2px;
+  bottom: -2px;
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: #fff;
+}
+
+.meter-legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  margin-top: 5px;
+  font-size: 11.5px;
+  color: var(--room-soft);
+}
+
+.facts { margin-top: 12px; font-size: 13px; color: var(--room-soft); }
+.facts b { color: var(--room-ink); font-weight: 600; }
+
+/* Deney kartı */
+.watch-note { margin-top: 8px; font-size: 14.5px; color: var(--ink-soft); }
+
+.answer {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.answer summary { cursor: pointer; font-weight: 600; }
+.answer p { margin-top: 8px; font-size: 14.5px; color: var(--ink-soft); }
+
+/* Simge listesi */
+.legend-list {
+  display: grid;
+  gap: 9px;
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+
+.legend-list li { display: flex; align-items: center; gap: 10px; }
+
+.sw {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--room);
+}
+
+.sw-lamp { background: radial-gradient(circle, #fff4c9 0 30%, #ffc43d 31% 45%, var(--room) 46%); border-radius: 50%; }
+.sw-box { background: #2a4658; border: 2px solid #5d8197; }
+.sw-hutch { background: rgba(106, 169, 242, 0.2); border: 2px solid #6aa9f2; }
+.sw-mirror { background: linear-gradient(90deg, var(--room) 40%, #bfe6f7 40% 60%, var(--room) 60%); }
+.sw-eye { background: radial-gradient(circle at 35% 50%, #fff 0 14%, rgba(255, 255, 255, 0.25) 15% 55%, var(--room) 56%); }
+.sw-pilot { background: radial-gradient(circle, #7dffa6 0 22%, rgba(120, 255, 160, 0.3) 23% 50%, var(--room) 51%); border-radius: 50%; }
+.sw-ring { background: var(--room); border: 3px solid #7fd18b; border-radius: 50%; }
+
+/* Kurallar */
+.rules {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rules li {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #e8eef0;
+}
+
+.rule-no {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+
+.rules h3 { margin: 2px 0 4px; font-family: var(--display); font-stretch: 108%; font-size: 16px; }
+.rules p { font-size: 13.5px; color: var(--ink-soft); }
+.rules .rule-like { margin-top: 6px; font-style: italic; color: var(--ink-faint); }
+.rules-note { margin-top: 14px; font-size: 14px; color: var(--ink); }
