@@ -2,7 +2,7 @@
 
 Braitenberg araçlarıyla tarayıcıda sibernetik deneyler. İki sensör, iki tekerlek, iki kablo: kabloları nasıl bağladığına göre araç ışıktan kaçar, ışığa saldırır, ışığın yanında durup ona "bakar" ya da onu fark edip başka yere gider. Hiçbir araç düşünmüyor; davranış yalnızca bağlantılardan doğuyor.
 
-**Canlı site:** ✍️ *Vercel/Netlify linkini buraya ekle*
+**Canlı site:** https://kaplumbaga-laboratuvari.vercel.app
 
 ![Kaplumbağa Laboratuvarı ekran görüntüsü](docs/ekran-goruntusu.png)
 
