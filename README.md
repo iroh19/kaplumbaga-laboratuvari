@@ -114,7 +114,9 @@ Geliştirme sürecinde Claude (Anthropic) kullanıldı.
 5. **İlk tasarım konuyu bilmeyen biri için anlaşılmazdı ve kalıp bir görünümdeydi.** Sayfa bento ızgarayla yeniden kuruldu; "sensör" yerine "göz" gibi gündelik kelimeler, etiketli bir araç şeması ve canlı sinyal paneli eklendi.
 6. **Mobilde sayfa yatay taşıyordu.** CSS grid sütunları `minmax(0, 1fr)` ile sınırlandı.
 
-✍️ *Kendi değerlendirmeni ekle: yapay zekanın önerilerinden hangilerini kabul ettin, hangilerini değiştirdin, üretilen kodu nasıl kontrol ettin?*
+**Kendi değerlendirmem:** Yapay zekanın her önerisini olduğu gibi almadım. Kaşifler için önerilen geniş sensör görüş alanı, baskılayıcı araçları iki ışığın ortasında dondurduğu için geri alındı; onun yerine dünya duvarlı bir odaya çevrildi (madde 4). İlk tasarım da konuyu bilmeyen biri için anlaşılmaz olduğu için baştan kuruldu (madde 5).
+
+Üretilen kodu üç yolla kontrol ettim: `npm test` ile 42 testin geçmesine, `npm run build` ile derlemenin hatasız bitmesine ve sitenin iki sayfasının tarayıcıda konsol hatası vermeden çalışmasına baktım. Yapay zeka en çok hata ayıklamada işe yaradı. En az güvendiğim kısım tarihsel bilgilerdi; bu yüzden Walter'ın robotlarıyla ilgili anlatılanlar sayfanın sonundaki kaynaklara dayandırıldı ve benzetimin sınırları sitede ayrıca yazıldı.
 
 ## Kaynaklar ve ilham
 
