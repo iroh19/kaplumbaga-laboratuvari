@@ -284,20 +284,22 @@ export function toScene(world) {
 }
 
 /**
- * Sahneden yeni bir dünya kurar. Hatalı girdileri atlar.
+ * Sahneden yeni bir dünya kurar. Sahne paylaşım bağlantısından ya da LocalStorage'dan,
+ * yani dışarıdan geldiği için güvenilmez: hatalı girdiler hata vermeden atlanır.
  * @param {Scene} scene
  * @returns {World}
  */
 export function fromScene(scene) {
+  const liste = (deger) => (Array.isArray(deger) ? deger : []);
   let world = emptyWorld();
-  for (const l of scene?.lights ?? []) {
-    if (Number.isFinite(l.x) && Number.isFinite(l.y)) {
+  for (const l of liste(scene?.lights)) {
+    if (Number.isFinite(l?.x) && Number.isFinite(l?.y)) {
       world = addLight(world, l.x, l.y, Number.isFinite(l.strength) ? l.strength : 1);
     }
   }
-  for (const v of scene?.vehicles ?? []) {
+  for (const v of liste(scene?.vehicles)) {
     try {
-      if (Number.isFinite(v.x) && Number.isFinite(v.y)) {
+      if (Number.isFinite(v?.x) && Number.isFinite(v?.y)) {
         world = addVehicle(world, v.type, v.x, v.y, Number.isFinite(v.heading) ? v.heading : 0);
       }
     } catch {

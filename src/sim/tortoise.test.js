@@ -3,7 +3,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   emptyTWorld, addTortoise, addLamp, addObstacle, removeNearT, segmentHitsRect, touches,
-  visibleSources, observe, stepTortoise, tickT, acikla, EXPERIMENTS, P, MODE_INFO,
+  visibleSources, observe, stepTortoise, tickT, rewindT, acikla, EXPERIMENTS, P, MODE_INFO,
 } from "./tortoise.js";
 
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -130,6 +130,17 @@ test("removeNearT: yakındaki lambayı ya da engeli siler, uzaktaysa dokunmaz", 
   assert.equal(removeNearT(w, 105, 100).lights.length, 0);
   assert.equal(removeNearT(w, 400, 300).obstacles.length, 0);
   assert.equal(removeNearT(w, 700, 500), w);
+});
+
+test("rewindT: kaplumbağa başa döner, eklenen lamba kalır ve yeni lamba eski bir id'yi almaz", () => {
+  const start = addTortoise(addLamp(emptyTWorld(), 600, 280), "E", 200, 280);
+  let w = addLamp(calistir(start, 3), 100, 100); // kullanıcı deney sürerken bir lamba ekledi
+  w = rewindT(start, w);
+  assert.deepEqual([w.tortoises[0].x, w.tortoises[0].y, w.time], [200, 280, 0]);
+  assert.equal(w.lights.length, 2);
+  w = addLamp(w, 300, 300);
+  assert.equal(new Set(w.lights.map((l) => l.id)).size, 3);
+  assert.equal(removeNearT(w, 300, 300).lights.length, 2); // yalnızca tıklanan lamba silinir
 });
 
 test("tickT girdiyi değiştirmez ve zamanı ilerletir", () => {

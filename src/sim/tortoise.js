@@ -228,6 +228,23 @@ export function stepTortoise(world, t, dt, recordTrail = true) {
   return { ...t, x, y, heading, mode, modeTime, scan, battery, hungry, lampOn, seen, speed, trail };
 }
 
+/**
+ * "Başa sar": kaplumbağalar başlangıç durumuna döner, kullanıcının eklediği lamba ve engeller kalır.
+ * nextId geri alınmaz; alınsaydı başa sardıktan sonra eklenen lamba eski bir lambayla aynı id'yi alır
+ * ve biri silinince ikisi birden silinirdi.
+ * @param {TWorld} start    Deneyin ilk hali
+ * @param {TWorld} current  Şu anki dünya
+ * @returns {TWorld}
+ */
+export function rewindT(start, current) {
+  return {
+    ...start,
+    lights: current.lights,
+    obstacles: current.obstacles,
+    nextId: Math.max(start.nextId, current.nextId),
+  };
+}
+
 /** Dünyayı dt saniye ilerletir. */
 export function tickT(world, dt) {
   const rec = Math.floor((world.time + dt) * 20) !== Math.floor(world.time * 20);

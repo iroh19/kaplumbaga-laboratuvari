@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import TortoiseAnatomy from "./components/TortoiseAnatomy.jsx";
 import { drawTWorld } from "./sim/tdraw.js";
 import {
-  EXPERIMENTS, MODE_INFO, P, acikla, addLamp, addObstacle, removeNearT, tickT,
+  EXPERIMENTS, MODE_INFO, P, acikla, addLamp, addObstacle, removeNearT, rewindT, tickT,
 } from "./sim/tortoise.js";
 
 const ARACLAR = [
@@ -41,7 +41,7 @@ function Cubuk({ etiket, oran, renk }) {
 }
 
 /** Kaplumbağanın gördüğü ışığı üç bölgeli bir çubukta gösterir: görmüyor, ilgi çekici, çok parlak. */
-function IsikOlcer({ seen, aç }) {
+function IsikOlcer({ seen, ac }) {
   const lo = (P.LOW / ESIK_OLCEK) * 100;
   const hi = (P.BRIGHT / ESIK_OLCEK) * 100;
   const isaret = Math.min(100, (seen / ESIK_OLCEK) * 100);
@@ -50,13 +50,13 @@ function IsikOlcer({ seen, aç }) {
       <div className="meter-zones" aria-hidden="true">
         <span style={{ width: `${lo}%` }} className="z-dark" />
         <span style={{ width: `${hi - lo}%` }} className="z-mid" />
-        <span style={{ width: `${100 - hi}%` }} className={aç ? "z-mid" : "z-hot"} />
+        <span style={{ width: `${100 - hi}%` }} className={ac ? "z-mid" : "z-hot"} />
         <i className="meter-mark" style={{ left: `${isaret}%` }} />
       </div>
       <div className="meter-legend">
         <span>görmüyor</span>
         <span>ilgi çekici</span>
-        <span>{aç ? "çok parlak ama açken çekici" : "çok parlak"}</span>
+        <span>{ac ? "çok parlak ama açken çekici" : "çok parlak"}</span>
       </div>
     </div>
   );
@@ -140,14 +140,13 @@ export default function TortoiseLab() {
     const y = ((e.clientY - r.top) / r.height) * worldRef.current.height;
     const w = worldRef.current;
     worldRef.current = tool === "isik" ? addLamp(w, x, y) : tool === "engel" ? addObstacle(w, x, y) : removeNearT(w, x, y);
-    startRef.current = { ...startRef.current, lights: worldRef.current.lights, obstacles: worldRef.current.obstacles };
     setSnap(ozet(worldRef.current, watchedRef));
     ciz();
   }
 
   function basaSar() {
     // Kullanıcının eklediği lamba ve engeller kalır; kaplumbağalar ilk konumuna döner
-    worldRef.current = { ...startRef.current, lights: worldRef.current.lights, obstacles: worldRef.current.obstacles };
+    worldRef.current = rewindT(startRef.current, worldRef.current);
     setSnap(ozet(worldRef.current, watchedRef));
     ciz();
   }
@@ -257,7 +256,7 @@ export default function TortoiseLab() {
                 <Cubuk etiket="Pil" oran={t.battery} renk={t.hungry ? "#e5484d" : "#7fd18b"} />
               </div>
               <p className="meter-title">Gördüğü ışık</p>
-              <IsikOlcer seen={t.seen} aç={t.hungry} />
+              <IsikOlcer seen={t.seen} ac={t.hungry} />
               <p className="facts">
                 Gösterge lambası: <b>{t.lampOn ? "yanık (arıyorum)" : "sönük"}</b> · Aç mı: <b>{t.hungry ? "evet" : "hayır"}</b>
               </p>

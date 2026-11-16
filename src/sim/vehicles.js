@@ -53,7 +53,7 @@ export const VEHICLE_TYPES = [
   },
   {
     id: "kasif",
-    ad: "Kaşif",
+    ad: "Kâşif",
     kod: "3b",
     baglanti: "capraz",
     etki: "baskilayici",

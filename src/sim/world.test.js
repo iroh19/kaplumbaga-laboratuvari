@@ -75,7 +75,7 @@ test("Sevgi (düz, baskılayıcı): sol sinyal sol tekerleği yavaşlatır", () 
   assert.ok(m.sol < m.sag);
 });
 
-test("Kaşif (çapraz, baskılayıcı): sol sinyal sağ tekerleği yavaşlatır", () => {
+test("Kâşif (çapraz, baskılayıcı): sol sinyal sağ tekerleği yavaşlatır", () => {
   const m = motors("kasif", solaGucluSinyal);
   assert.ok(m.sag < m.sol);
 });
@@ -108,7 +108,7 @@ test("Sevgi ışığın yanına gelir ve orada yavaşlar", () => {
   assert.ok(son.speed < 40, `son hız ${son.speed.toFixed(1)}`);
 });
 
-test("Kaşif ışığın yanında durmaz, yoluna devam eder", () => {
+test("Kâşif ışığın yanında durmaz, yoluna devam eder", () => {
   const yol = sur("kasif", solOndeIsik, 20);
   assert.ok(yol.at(-1).speed > 40);
 });
@@ -186,4 +186,13 @@ test("fromScene bilinmeyen tipleri ve bozuk satırları atlar", () => {
 test("fromScene boş ya da eksik girdide boş dünya döndürür", () => {
   assert.equal(fromScene(null).vehicles.length, 0);
   assert.equal(fromScene({}).lights.length, 0);
+});
+
+test("fromScene bozuk bir paylaşım bağlantısında hata vermez", () => {
+  // Bağlantıdaki sahne herhangi bir JSON olabilir: dizi yerine sayı, satır yerine null
+  assert.equal(fromScene(5).lights.length, 0);
+  assert.equal(fromScene({ lights: 7, vehicles: "x" }).vehicles.length, 0);
+  const w = fromScene({ lights: [null, { x: 1, y: 2 }], vehicles: [null, 3, { type: "korku", x: 4, y: 4 }] });
+  assert.equal(w.lights.length, 1);
+  assert.equal(w.vehicles.length, 1);
 });

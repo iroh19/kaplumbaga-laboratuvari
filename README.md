@@ -15,7 +15,7 @@ Braitenberg araçlarıyla tarayıcıda sibernetik deneyler. İki sensör, iki te
 **Sayfa 2: Braitenberg araçları.**
 
 - **Işık koy, araç koy, sil:** Sahneye tıklayarak deney kur.
-- **Dört araç tipi:** Korku, Saldırganlık, Sevgi, Kaşif (Braitenberg'in 2a, 2b, 3a, 3b araçları). Her kartta göz-tekerlek bağlantı şeması var.
+- **Dört araç tipi:** Korku, Saldırganlık, Sevgi, Kâşif (Braitenberg'in 2a, 2b, 3a, 3b araçları). Her kartta göz-tekerlek bağlantı şeması var.
 - **"Araç ne görüyor?" paneli:** Seçtiğin aracın iki gözünün gördüğü ışığı ve iki tekerleğinin hızını canlı gösterir, o an neden döndüğünü düz Türkçeyle açıklar.
 - **Hazır deneyler:** Beş sahne, her birinde düşündüren bir soru.
 - **Oynat, duraklat, adım adım ilerlet, başa sar.** Boşluk tuşu oynatır ve duraklatır. Hız 0,25× ile 3× arasında ayarlanabilir.
@@ -29,7 +29,7 @@ Braitenberg araçlarıyla tarayıcıda sibernetik deneyler. İki sensör, iki te
 | Korku (2a) | düz | uyarıcı (+) | Işığın olduğu taraftaki tekerlek hızlanır, araç ışıktan uzağa döner. |
 | Saldırganlık (2b) | çapraz | uyarıcı (+) | Araç ışığa döner, yaklaştıkça hızlanır ve ışığın üstüne atılır. |
 | Sevgi (3a) | düz | baskılayıcı (−) | Işığa döner ama yaklaştıkça yavaşlar, yanında durur. |
-| Kaşif (3b) | çapraz | baskılayıcı (−) | Işığı fark edince yavaşlar, ondan yüz çevirip başka yere gider. |
+| Kâşif (3b) | çapraz | baskılayıcı (−) | Işığı fark edince yavaşlar, ondan yüz çevirip başka yere gider. |
 
 Her adımda: sensörler ışığı ölçer (yakınlık ve yöne göre) → bağlantılar tekerlek hızlarını belirler → araç diferansiyel sürüşle hareket eder → sensörler yeniden ölçer. Bu kapalı döngü, sibernetiğin temel fikri: geri besleme.
 
@@ -40,7 +40,7 @@ Node.js 20.19 veya üstü gerekir.
 ```bash
 npm install       # bağımlılıkları kur
 npm run dev       # geliştirme sunucusu: http://localhost:5173
-npm test          # simülasyon çekirdeklerinin testleri (42 test)
+npm test          # simülasyon çekirdeklerinin testleri (44 test)
 npm run build     # yayın için dist/ klasörünü üret
 ```
 
@@ -110,15 +110,17 @@ Geliştirme sürecinde Claude (Anthropic) kullanıldı.
 **Yapay zeka destekli hata ayıklamada bulunan sorunlar:**
 
 1. **Sevgi aracı ışığın içinden geçip gidiyordu.** Işık tam karşıdayken iki sensör de ona 45° açıyla baktığı için okuma aracı durduracak kadar yükselmiyordu. Baskılayıcı bağlantılar için ayrı ve daha güçlü bir kazanç tanımlandı.
-2. **Kaşif tam simetrik durumda takılıp kalıyordu.** Gerçek robotlarda olduğu gibi tekerlekler arasına küçük, sabit bir fark (±%1,5) eklendi.
+2. **Kâşif tam simetrik durumda takılıp kalıyordu.** Gerçek robotlarda olduğu gibi tekerlekler arasına küçük, sabit bir fark (±%1,5) eklendi.
 3. **Araçların izi hiç çizilmiyordu.** Kenar sarma fonksiyonu kayan nokta hatası yüzünden aralıktaki sayıları da çok az değiştiriyor, kod her adımda "araç kenardan atladı" sanıp izi sıfırlıyordu. Bunu yakalayan bir test eklendi.
-4. **Kenarları birbirine bağlı dünyada Kaşifler sonsuza dek aynı düz çizgide dönüyordu.** Daha geniş bir sensör görüş alanı denendi ama bu kez baskılayıcı araçlar iki ışığın ortasında donup kaldı. O değişiklik geri alındı ve dünya duvarlı bir odaya çevrildi.
+4. **Kenarları birbirine bağlı dünyada Kâşifler sonsuza dek aynı düz çizgide dönüyordu.** Daha geniş bir sensör görüş alanı denendi ama bu kez baskılayıcı araçlar iki ışığın ortasında donup kaldı. O değişiklik geri alındı ve dünya duvarlı bir odaya çevrildi.
 5. **İlk tasarım konuyu bilmeyen biri için anlaşılmazdı ve kalıp bir görünümdeydi.** Sayfa bento ızgarayla yeniden kuruldu; "sensör" yerine "göz" gibi gündelik kelimeler, etiketli bir araç şeması ve canlı sinyal paneli eklendi.
 6. **Mobilde sayfa yatay taşıyordu.** CSS grid sütunları `minmax(0, 1fr)` ile sınırlandı.
+7. **Bozuk bir paylaşım bağlantısı sayfayı açılışta çökertebiliyordu.** Bağlantıdaki sahne dışarıdan gelen bir veri; dizi yerine sayı ya da boş satır içerdiğinde `fromScene` hata veriyordu. Artık hatalı kısımlar atlanıyor ve bunu sınayan bir test var.
+8. **Kaplumbağa sayfasında "Başa sar"dan sonra eklenen lamba, eski bir lambayla aynı kimliği alıyordu;** biri silinince ikisi birden siliniyordu. Başa sarma saf bir fonksiyona (`rewindT`) taşındı ve testi yazıldı.
 
-**Kendi değerlendirmem:** Yapay zekanın her önerisini olduğu gibi almadım. Kaşifler için önerilen geniş sensör görüş alanı, baskılayıcı araçları iki ışığın ortasında dondurduğu için geri alındı; onun yerine dünya duvarlı bir odaya çevrildi (madde 4). İlk tasarım da konuyu bilmeyen biri için anlaşılmaz olduğu için baştan kuruldu (madde 5).
+**Kendi değerlendirmem:** Yapay zekanın her önerisini olduğu gibi almadım. Kâşifler için önerilen geniş sensör görüş alanı, baskılayıcı araçları iki ışığın ortasında dondurduğu için geri alındı; onun yerine dünya duvarlı bir odaya çevrildi (madde 4). İlk tasarım da konuyu bilmeyen biri için anlaşılmaz olduğu için baştan kuruldu (madde 5).
 
-Üretilen kodu üç yolla kontrol ettim: `npm test` ile 42 testin geçmesine, `npm run build` ile derlemenin hatasız bitmesine ve sitenin iki sayfasının tarayıcıda konsol hatası vermeden çalışmasına baktım. Yapay zeka en çok hata ayıklamada işe yaradı. En az güvendiğim kısım tarihsel bilgilerdi; bu yüzden Walter'ın robotlarıyla ilgili anlatılanlar sayfanın sonundaki kaynaklara dayandırıldı ve benzetimin sınırları sitede ayrıca yazıldı.
+Üretilen kodu üç yolla kontrol ettim: `npm test` ile 44 testin geçmesine, `npm run build` ile derlemenin hatasız bitmesine ve sitenin iki sayfasının tarayıcıda konsol hatası vermeden çalışmasına baktım. Yapay zeka en çok hata ayıklamada işe yaradı. En az güvendiğim kısım tarihsel bilgilerdi; bu yüzden Walter'ın robotlarıyla ilgili anlatılanlar sayfanın sonundaki kaynaklara dayandırıldı ve benzetimin sınırları sitede ayrıca yazıldı.
 
 ## Kaynaklar ve ilham
 
