@@ -4,6 +4,8 @@ Braitenberg araçlarıyla tarayıcıda sibernetik deneyler. İki sensör, iki te
 
 **Canlı site:** https://kaplumbaga-laboratuvari.vercel.app
 
+**Yedek adres (GitHub Pages):** https://iroh19.github.io/kaplumbaga-laboratuvari/
+
 ![Kaplumbağa Laboratuvarı ekran görüntüsü](docs/ekran-goruntusu.png)
 
 ## Ne yapabilirsin?
